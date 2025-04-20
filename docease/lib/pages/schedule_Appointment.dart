@@ -305,22 +305,31 @@ doctorBloc.add(GetPatientsDetailsEvent());
                   bottomNavigationBar:  SafeArea(
                 bottom: false, // Prevent extra space at the bottom
                 child: BottomNavigationBar(
-                  currentIndex: 0,
+                  currentIndex: 1,
                   type: BottomNavigationBarType.fixed,
                   selectedItemColor: Colors.indigo,
                   unselectedItemColor: Colors.grey,
                   items: [
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.home), label: 'Home'),
+                        icon: GestureDetector(
+                          onTap: () {
+                             Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                            (Route<dynamic> route) => route.isFirst,
+                          );
+                          },
+                          child: Icon(Icons.home)), label: 'Home'),
                     BottomNavigationBarItem(
                       icon: GestureDetector(
                         onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VaccineFollowUpScreen()),
-                            (Route<dynamic> route) => route.isFirst,
-                          );
+                          // Navigator.pushAndRemoveUntil(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => VaccineFollowUpScreen()),
+                          //   (Route<dynamic> route) => route.isFirst,
+                          // );
                           // Navigator.push(
                           //   context,
                           //   MaterialPageRoute(builder: (_) => VaccineFollowUpScreen()),

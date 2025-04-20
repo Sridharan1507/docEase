@@ -875,7 +875,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   PatientBloc patientBloc = PatientBloc();
   Widget buildBloc() {
-    return BlocBuilder<PatientBloc, PatientState>(
+    return BlocConsumer<PatientBloc, PatientState>(
+      listener: (context, state) {
+        if (state is PatientRegLoadedState) {
+          print('user reg loaded');
+          SharedPreference.login(
+            authToken: state.authResponse![0].accessToken.toString(),
+            sessionId: state.authResponse![0].sessionToken.toString(),
+            userNmae: userNameTextEditingController.text.trim(),
+            password: passwordTextEditingController.text.trim(),
+          );
+         navigateHomeScreen();
+        }
+      },
       bloc: patientBloc,
       builder: (BuildContext context, state) {
         if (state is PatientRegLoadingState) {
@@ -885,14 +897,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _toast(state.error);
           return const SizedBox();
         } else if (state is PatientRegLoadedState) {
-          print('user reg loaded');
-          SharedPreference.login(
-            authToken: state.authResponse![0].accessToken.toString(),
-            sessionId: state.authResponse![0].sessionToken.toString(),
-            userNmae: userNameTextEditingController.text.trim(),
-            password: passwordTextEditingController.text.trim(),
-          );
-         navigateHomeScreen();
+          // print('user reg loaded');
+          // SharedPreference.login(
+          //   authToken: state.authResponse![0].accessToken.toString(),
+          //   sessionId: state.authResponse![0].sessionToken.toString(),
+          //   userNmae: userNameTextEditingController.text.trim(),
+          //   password: passwordTextEditingController.text.trim(),
+          // );
+        //  navigateHomeScreen();
           return const SizedBox();
         }
         return const SizedBox();
